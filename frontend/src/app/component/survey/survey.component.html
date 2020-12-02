@@ -1,0 +1,155 @@
+<div class="container py-5">
+  <!--  form-->
+  <form id="survey-form" autocomplete="on" #studentForm="ngForm"
+        ngNativeValidate (ngSubmit)="submit()">
+<!--    {{studentForm.value | json}}-->
+    <fieldset>
+      <!-- <legend class="h3">Hey patriot please fill in the form</legend> -->
+      <div class="form-group">
+        <label>
+          <div class="form-flex">
+            <i class="fa fa-asterisk" style="color: #b35555"></i>
+            <input [(ngModel)]="student.studentID" type="number" id="studentID" name="studentID" class="form-control"
+                   placeholder="GNumber" autofocus required>
+            <i class="fa fa-asterisk" style="color: #b35555"></i>
+            <input [(ngModel)]="student.fName" ngModel type="text" id="fname" name="fname" class="form-control"
+                   placeholder="First Name" autofocus required>
+            <i class="fa fa-asterisk" style="color: #b35555"></i>
+            <input [(ngModel)]="student.lName" type="text" id="lname" name="lname" class="form-control"
+                   placeholder="Last Name" autofocus required>
+          </div>
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="email">
+          <div class="form-flex">
+            <i class="fa fa-asterisk" style="color: #b35555"></i>
+            <input [(ngModel)]="student.email" type="email" class="form-control" id="email" name="email"
+                   placeholder="email@example.com" required>
+          </div>
+        </label>
+      </div>
+      <div class="form-group">
+        <label style="width: 90%;">
+          <input [(ngModel)]="student.street" type="text" id="street" name="street" class="form-control"
+                 placeholder="street" required>
+        </label>
+      </div>
+      <div class="form-group">
+        <div class="form-flex">
+          <label>
+            <input [(ngModel)]="student.zipcode" type="number" class="form-control" id="zip" name="zipcode"
+                   placeholder="Zip" required>
+          </label>
+          <label>
+            <input [(ngModel)]="student.city" type="text" class="form-control" id="city" name="city"
+                   placeholder="City" required>
+          </label>
+          <label>
+            <input [(ngModel)]="student.state" class="form-control" type="text" id="state" name="state"
+                   placeholder="State" required>
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>
+          <div class="form-flex">
+            <input [(ngModel)]="student.phone" type="text" class="form-control" id="phone"
+                   name="phone" placeholder="Phone">
+          </div>
+        </label>
+      </div>
+      <div class="form-group">
+        <div class="form-flex">
+          <i>Date</i>
+          <input [(ngModel)]="student.fDate" name="date" type="date" class="form-control"
+                 placeholder="Date" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <legend for="exampleSelect1">How likely would you be recommending George Mason to other prospective students?
+        </legend>
+        <select [(ngModel)]="student.recommend" name="recommend" class="form-control" id="exampleSelect1">
+          <option>Very Likely</option>
+          <option>Likely</option>
+          <option>Unlikely</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <legend>what did you like most about the campus?</legend>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input [(ngModel)]="student._students" name="students" class="form-check-input" type="checkbox">
+            students
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input [(ngModel)]="student._location" name="location" class="form-check-input" type="checkbox">
+            location
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input [(ngModel)]="student._campus" name="campus" class="form-check-input" type="checkbox">
+            campus
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input [(ngModel)]="student._atmosphere" name="atmosphere" class="form-check-input" type="checkbox">
+            atmosphere
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input [(ngModel)]="student._dormrooms" name="dormrooms" class="form-check-input" type="checkbox">
+            dorm rooms
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input [(ngModel)]="student._sports" name="sports" class="form-check-input" type="checkbox">
+            sports
+          </label>
+        </div>
+        <fieldset class="form-group">
+          <legend>How did you become interested in us?</legend>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input [(ngModel)]="student.howknow" name="howknow" type="radio" class="form-check-input"
+                     id="optionsRadios1" value="friends">
+              friends
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input [(ngModel)]="student.howknow" name="howknow" type="radio" class="form-check-input"
+                     id="optionsRadios2" value="television">
+              television
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input [(ngModel)]="student.howknow" name="howknow" type="radio" class="form-check-input"
+                     id="optionsRadios3" value="Internet">
+              Internet
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input [(ngModel)]="student.howknow" name="howknow" type="radio" class="form-check-input"
+                     id="optionsRadios4" value="other">
+              other
+            </label>
+          </div>
+        </fieldset>
+        <div class="form-group">
+          <textarea [(ngModel)]="student.comments" name="comments" class="form-control" rows="3" placeholder="Comments"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mx-3">Submit</button>
+        <button type="button" class="btn btn-primary mx-3 float-right">Cancel</button>
+      </div>
+    </fieldset>
+  </form>
+</div>

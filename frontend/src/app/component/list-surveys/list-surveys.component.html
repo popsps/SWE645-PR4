@@ -1,0 +1,13 @@
+<p class="lead">
+  List of all students
+</p>
+<ul class="list-group m-3" *ngFor="let student of students">
+  <!--    href='FormServlet?studentID={{student.studentID}}-->
+  <a [routerLink]="['/students',student.studentID]" style="text-decoration: none">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      {{student.fName}} {{student.lName}}
+      <span class="badge badge-primary badge-pill">{{student.studentID}}</span>
+    </li>
+  </a>
+</ul>
+

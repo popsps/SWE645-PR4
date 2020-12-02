@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">
+  <persistence-unit name="swe642db" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <class>com.swe645.StudentBean</class>
+    <properties>
+      <property name="javax.persistence.jdbc.driver"
+                value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.url"
+                value="jdbc:mysql://swe645-mysql:3306/swedb"/>
+      <property name="javax.persistence.jdbc.user"
+                value="root"/>
+      <property name="javax.persistence.jdbc.password"
+                value="admin"/>
+      <!--      For testing on local machine-->
+      <!--      <property name="javax.persistence.jdbc.driver"-->
+      <!--                value="com.mysql.jdbc.Driver"/>-->
+      <!--      <property name="javax.persistence.jdbc.url"-->
+      <!--                value="jdbc:mysql://localhost:3306/test1"/>-->
+      <!--      <property name="javax.persistence.jdbc.user"-->
+      <!--                value="javaadmin"/>-->
+      <!--      <property name="javax.persistence.jdbc.password"-->
+      <!--                value="ppooiiuu"/>-->
+    </properties>
+
+  </persistence-unit>
+</persistence>

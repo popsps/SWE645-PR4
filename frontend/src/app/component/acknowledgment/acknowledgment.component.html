@@ -1,0 +1,14 @@
+<div class="jumbotron">
+  <h1 id="username" class="display-3"></h1>
+  <p class="lead" *ngIf="student">
+    {{student.fName}}, your form has been submitted successfully.
+  </p>
+  <p class="lead" *ngIf="!student">
+    Your form can't be proceed at this time.
+  </p>
+  <hr class="my-4">
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" routerLink="/" role="button">Back to Home Page</a>
+  </p>
+</div>
+<app-list-surveys></app-list-surveys>

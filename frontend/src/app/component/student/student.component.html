@@ -1,0 +1,151 @@
+<div class="container py-5">
+  <!--  form-->
+  <form id="survey-form" autocomplete="on">
+    <fieldset>
+      <div class="form-group">
+        <label>
+          <div class="form-flex">
+            <i class="fa fa-asterisk" style="color: #b35555"></i>
+            <input type="number" id="studentID" name="studentID" class="form-control"
+                   placeholder="GNumber" value="{{student.studentID}}" readonly>
+            <i class="fa fa-asterisk" style="color: #b35555"></i>
+            <input type="text" id="fname" name="fname" class="form-control"
+                   placeholder="First Name" value="{{student.fName}}" readonly>
+            <i class="fa fa-asterisk" style="color: #b35555"></i>
+            <input type="text" id="lname" name="lname" class="form-control"
+                   placeholder="Last Name" value="{{student.lName}}" readonly>
+          </div>
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="email">
+          <div class="form-flex">
+            <i class="fa fa-asterisk" style="color: #b35555"></i>
+            <input type="email" class="form-control" id="email" name="email"
+                   placeholder="email@example.com" value="{{student.email}}" required readonly>
+          </div>
+        </label>
+      </div>
+      <div class="form-group">
+        <label style="width: 90%;">
+          <input type="text" id="street" name="street" class="form-control"
+                 placeholder="street" value="{{student.street}}" readonly>
+        </label>
+      </div>
+      <div class="form-group">
+        <div class="form-flex">
+          <label>
+            <input type="number" class="form-control" id="zip" name="zipcode"
+                   placeholder="Zip" value="{{student.zipcode}}" readonly>
+          </label>
+          <label>
+            <input type="text" class="form-control" id="city" name="city"
+                   placeholder="City" value="{{student.city}}" readonly>
+          </label>
+          <label>
+            <input class="form-control" type="text" id="state" name="state"
+                   placeholder="State" value="{{student.state}}" readonly>
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>
+          <div class="form-flex">
+            <input type="text" class="form-control" id="phone"
+                   name="phone" placeholder="Phone" value="{{student.phone}}" readonly>
+          </div>
+        </label>
+      </div>
+      <div class="form-group">
+        <div class="form-flex">
+          <input type="text" class="form-control"
+                 placeholder="Date" value="{{student.fDate}}" readonly>
+        </div>
+      </div>
+      <div class="form-group">
+        <legend for="exampleSelect1">How likely would you be recommending George Mason to other prospective students?
+        </legend>
+        <select value="{{student.recommend}}" disabled  name="recommend" class="form-control" id="exampleSelect1">
+          <option>Very Likely</option>
+          <option>Likely</option>
+          <option>Unlikely</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <legend>what did you like most about the campus?</legend>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input [checked]="student._students"  disabled name="students" class="form-check-input" type="checkbox">
+            students
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input [checked]="student._location"  name="location" disabled class="form-check-input" type="checkbox">
+            location
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input [checked]="student._campus"  name="campus" disabled class="form-check-input" type="checkbox">
+            campus
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input [checked]="student._atmosphere"  name="atmosphere" disabled class="form-check-input" type="checkbox">
+            atmosphere
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input [checked]="student._dormrooms"  name="dormrooms" disabled class="form-check-input" type="checkbox">
+            dorm rooms
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input [checked]="student._sports"  name="sports" disabled class="form-check-input" type="checkbox">
+            sports
+          </label>
+        </div>
+        <fieldset class="form-group">
+          <legend>How did you become interested in us?</legend>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input [checked]="student.howknow === 'friends'"  disabled name="howknow" type="radio" class="form-check-input"
+                     id="optionsRadios1" value="friends">
+              friends
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input [checked]="student.howknow === 'television'"  disabled name="howknow" type="radio" class="form-check-input"
+                     id="optionsRadios2" value="television">
+              television
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input [checked]="student.howknow === 'Internet'" disabled name="howknow" type="radio" class="form-check-input"
+                     id="optionsRadios3" value="Internet">
+              Internet
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input [checked]="student.howknow === 'other'"  disabled name="howknow" type="radio" class="form-check-input"
+                     id="optionsRadios4" value="other">
+              other
+            </label>
+          </div>
+        </fieldset>
+        <div class="form-group">
+          <textarea value="{{student.comments}}" readonly disabled name="comments" class="form-control" rows="3" placeholder="Comments"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mx-3">Submit</button>
+        <button type="button" class="btn btn-primary mx-3 float-right">Cancel</button>
+      </div>
+    </fieldset>
+  </form>
+</div>

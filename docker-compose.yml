@@ -1,0 +1,169 @@
+version: "3"
+
+volumes:
+  kafka-data-1:
+  kafka-data-2:
+  kafka-data-3:
+  zookeeper-data-1:
+  zookeeper-data-2:
+  zookeeper-data-3:
+  certs:
+
+networks:
+  swenet:
+
+services:
+  swe645-backend:
+    image: 127.0.0.1:5000/tomcat-backend
+    build: ./backend
+    container_name: swe645-backend
+    ports:
+      - 8081:8080
+    networks:
+      - swenet
+
+  swe645-frontend:
+    image: 127.0.0.1:5000/nginx-frontend
+    build: ./frontend
+    container_name: swe645-frontend
+    ports:
+      - 80:80
+    networks:
+      - swenet
+
+  swe645-zookeeper-1:
+    image: wurstmeister/zookeeper:latest
+    container_name: swe645-zookeeper-1
+    volumes:
+      - zookeeper-data-1:/opt/zookeeper-3.4.13/data
+    ports:
+      - 2181:2181
+    networks:
+      - swenet
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+      ZOOKEEPER_SERVERS: swe645-zookeeper-1:2887:3887;swe645-zookeeper-2:2888:3888;swe645-zookeeper-3:2889:3889
+
+  swe645-zookeeper-2:
+    image: wurstmeister/zookeeper:latest
+    container_name: swe645-zookeeper-2
+    volumes:
+      - zookeeper-data-2:/opt/zookeeper-3.4.13/data
+    ports:
+      - 2182:2182
+    networks:
+      - swenet
+    environment:
+      ZOOKEEPER_SERVER_ID: 2
+      ZOOKEEPER_CLIENT_PORT: 2182
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+      ZOOKEEPER_SERVERS: swe645-zookeeper-1:2887:3887;swe645-zookeeper-2:2888:3888;swe645-zookeeper-3:2889:3889
+
+  swe645-zookeeper-3:
+    image: wurstmeister/zookeeper:latest
+    container_name: swe645-zookeeper-3
+    volumes:
+      - zookeeper-data-3:/opt/zookeeper-3.4.13/data
+    ports:
+      - 2183:2183
+    networks:
+      - swenet
+    environment:
+      ZOOKEEPER_SERVER_ID: 3
+      ZOOKEEPER_CLIENT_PORT: 2183
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+      ZOOKEEPER_SERVERS: swe645-zookeeper-1:2887:3887;swe645-zookeeper-2:2888:3888;swe645-zookeeper-3:2889:3889
+
+  swe645-kafka-1:
+    image: wurstmeister/kafka:latest
+    container_name: swe645-kafka-1
+    networks:
+      swenet:
+        aliases:
+          - kafka-1
+    ports:
+      - 9093:9093
+    volumes:
+      - kafka-data-1:/kafka/kafka-logs
+      - certs:/certs
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: swe645-zookeeper-1:2181, swe645-zookeeper-2:2182, swe645-zookeeper-3:2183
+      # KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      # KAFKA_MIN_INSYNC_REPLICAS: 2
+      # KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 3000
+      # KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: 'true'
+      KAFKA_CONTROLLER_SHUTDOWN_ENABLE: "true"
+      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:SSL
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_LOG_RETENTION_BYTES: -1
+      KAFKA_LOG_RETENTION_DAYS: -1
+      KAFKA_LOG_DIRS: /kafka/kafka-logs
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://localhost:9093
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_CREATE_TOPICS: "testswe"
+      # SSL SECURITY
+      # KAFKA_SSL_KEYSTORE_LOCATION: 'certs/docker.kafka.server.keystore.jks'
+      # KAFKA_SSL_KEYSTORE_PASSWORD: 'swe645'
+      # KAFKA_SSL_KEY_PASSWORD: 'swe645'
+      # KAFKA_SSL_TRUSTSTORE_LOCATION: 'certs/docker.kafka.server.truststore.jks'
+      # KAFKA_SSL_TRUSTSTORE_PASSWORD: 'swe645'
+      # KAFKA_SSL_CLIENT_AUTH: 'none'
+      # KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: ''
+     
+
+  swe645-kafka-2:
+    image: wurstmeister/kafka:latest
+    container_name: swe645-kafka-2
+    networks:
+      swenet:
+        aliases:
+          - kafka-2
+    volumes:
+      - kafka-data-2:/kafka/kafka-logs
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: swe645-zookeeper-1:2181, swe645-zookeeper-2:2182, swe645-zookeeper-3:2183
+      # KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      # KAFKA_MIN_INSYNC_REPLICAS: 2
+      # KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 3000
+      # KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: 'true'
+      KAFKA_CONTROLLER_SHUTDOWN_ENABLE: "true"
+      KAFKA_LISTENERS: INSIDE://:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_LOG_RETENTION_BYTES: -1
+      KAFKA_LOG_RETENTION_DAYS: -1
+      KAFKA_LOG_DIRS: /kafka/kafka-logs
+
+  swe645-kafka-3:
+    image: wurstmeister/kafka:latest
+    container_name: swe645-kafka-3
+    networks:
+      swenet:
+        aliases:
+          - kafka-3
+    volumes:
+      - kafka-data-3:/kafka/kafka-logs
+    environment:
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: swe645-zookeeper-1:2181, swe645-zookeeper-2:2182, swe645-zookeeper-3:2183
+      # KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      # KAFKA_MIN_INSYNC_REPLICAS: 2
+      # KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 3000
+      # KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: 'true'
+      KAFKA_CONTROLLER_SHUTDOWN_ENABLE: "true"
+      KAFKA_LISTENERS: INSIDE://:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_LOG_RETENTION_BYTES: -1
+      KAFKA_LOG_RETENTION_DAYS: -1

@@ -1,0 +1,14 @@
+{
+  "/ListAllStudents":{
+    "target": "http://localhost:8080/swe645_hw3_1_0_war/",
+    "secure": false
+  },
+  "/FormServlet":{
+    "target": "http://localhost:8080/swe645_hw3_1_0_war/",
+    "secure": false
+  },
+  "/confirmation":{
+    "target": "http://localhost:8080/swe645_hw3_1_0_war/",
+    "secure": false
+  }
+}
