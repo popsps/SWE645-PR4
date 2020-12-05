@@ -1,4 +1,4 @@
-# SWE645-PROJECT4 TEST 00.6
+# SWE645-PROJECT4 TEST 00.7
 
 ## [EC2 Link](http://ec2-3-235-245-12.compute-1.amazonaws.com/)
 
