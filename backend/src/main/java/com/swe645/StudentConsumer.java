@@ -15,6 +15,7 @@ import java.util.Properties;
 
 public class StudentConsumer {
   public StudentConsumer() {
+    System.out.println("CUNSOMER FOR TOPIC " + TOPIC );
   }
 
   static final String TOPIC = "survey-data-topic";
