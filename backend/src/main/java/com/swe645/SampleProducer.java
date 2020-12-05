@@ -20,12 +20,12 @@ public class SampleProducer {
     props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
     props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
     //      SSL Support
-    props.put("security.protocol", "SSL");
-    props.put("ssl.truststore.location", "C:\\Users\\MarsS\\Dropbox\\GMU\\fall 2020\\SWE645\\hw4\\SWE645-PR4\\kafka_test\\certs\\docker.kafka.client.truststore.jks");
-    props.put("ssl.truststore.password", "swe645");
-    props.put("ssl.truststore.type", "JKS");
-    props.put("ssl.key.password", "swe645");
-    props.put("ssl.endpoint.identification.algorithm", "");
+//    props.put("security.protocol", "SSL");
+//    props.put("ssl.truststore.location", "C:\\Users\\MarsS\\Dropbox\\GMU\\fall 2020\\SWE645\\hw4\\SWE645-PR4\\kafka_test\\certs\\docker.kafka.client.truststore.jks");
+//    props.put("ssl.truststore.password", "swe645");
+//    props.put("ssl.truststore.type", "JKS");
+//    props.put("ssl.key.password", "swe645");
+//    props.put("ssl.endpoint.identification.algorithm", "");
 
     Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
     StudentBean student = new StudentBean(9023443, "Jack", "Danovan", "Fairfax",

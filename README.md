@@ -1,8 +1,8 @@
-# SWE645-PROJECT4 TEST 01.4
+# SWE645-PROJECT4
 
 ## [EC2 Link](http://ec2-3-239-72-137.compute-1.amazonaws.com)
 
-## STAND ALONE APPLICATION TO SUPPORT THE EXTRA CREDIT
+> ## **A STAND ALONE APPLICATION WITH THE EXTRA CREDIT INTEGRATION IS PROVIDED**
 
 This project is a container orchestration of 3 services. A frontend web application implemented using `Angular` and `nginx`. A backend application implemented using `JAVA EE` and `Tomcat` to handle REST API requests. And finally a persistent `Kafka` messaging service that acts as a persistent database.
 
@@ -10,13 +10,13 @@ This project is a container orchestration of 3 services. A frontend web applicat
 
 To build and run this project you will need to have `Docker` installed on your machine. We will be using `Docker Swarm` for orchestration of services. To build and run this project simply run `docker stack deploy -c ./docker-compose.yml swe645`. This will create a frontend, a backend, 3 brokers and 3 zookeepers.
 
-For this project we will be using 3 Amazon `EC2` instances to serve each services. The setup for this is exactly as we have previously constructed and can be found at [SWE645-HW2](https://github.com/popsps/SWE645-group-project).
+For this project we will be using 1 Amazon `EC2` instance to serve all the services. The setup for this is exactly as what we have previously constructed and can be found at [SWE645-HW2](https://github.com/popsps/SWE645-group-project).
 
 # UNDERSTANDING PROJECT FROM SCRATCH
 
 ## JENKINS
 
-To build and run this project we will be using `Jenkins` to automate the build. To achieve this goal we simply run this script.
+To build and run this project we will be using `Jenkins` to automate the build. To achieve this goal we simply run this script in our Jenkins.
 
 ```sh
 docker service rm $(docker service ls -q) || true # remove all previous services
@@ -184,7 +184,7 @@ services:
 
 ### HOW DOES THE YML FILE WORK
 
-We create 3 `kafka brokers` and 3 `zookeepers`. Each `kafka broker` gets a alias name on the network that lets it to be able to connect to other brokers. We define 2 protocols. One for inside communications between brokers. It is called `INSIDE`. One is for outside communications to brokers. It is called `OUTSIDE`. The `INSIDE` are communicating to each other using the port `9092`. The `OUTSIDE` is exposed to the client by port `9093`.
+We create 3 `kafka brokers` and 3 `zookeepers`. Each `kafka broker` gets a alias name on the network that lets it to be able to connect to other brokers. We define 2 protocols. One for inside communications between brokers. It is called `INSIDE`. One is for outside communications to brokers. It is called `OUTSIDE`. The `INSIDE` is used for inner communication between brokers as well as backend to brokers using the port `9092`. The `OUTSIDE` is used for testing our application on local machine and it uses port `9093`.
 
 ### Persistency
 

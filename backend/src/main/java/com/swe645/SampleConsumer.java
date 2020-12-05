@@ -14,7 +14,7 @@ import java.util.Properties;
 
 public class SampleConsumer {
   static final String TOPIC = "survey-data-topic";
-  static final String GROUP = "test1_group11";
+  static final String GROUP = "test1_group12";
 
   public SampleConsumer() {
     Properties props = new Properties();
@@ -27,18 +27,18 @@ public class SampleConsumer {
     props.put("auto.offset.reset", "earliest");
 
     // ssl support
-    props.put("security.protocol", "SSL");
-    props.put("ssl.truststore.location", "C:\\Users\\MarsS\\Dropbox\\GMU\\fall 2020\\SWE645\\hw4\\SWE645-PR4\\kafka_test\\certs\\docker.kafka.client.truststore.jks");
-    props.put("ssl.truststore.password", "swe645");
-    props.put("ssl.truststore.type", "JKS");
-    props.put("ssl.key.password", "swe645");
-    props.put("ssl.endpoint.identification.algorithm", "");
+//    props.put("security.protocol", "SSL");
+//    props.put("ssl.truststore.location", "C:\\Users\\MarsS\\Dropbox\\GMU\\fall 2020\\SWE645\\hw4\\SWE645-PR4\\kafka_test\\certs\\docker.kafka.client.truststore.jks");
+//    props.put("ssl.truststore.password", "swe645");
+//    props.put("ssl.truststore.type", "JKS");
+//    props.put("ssl.key.password", "swe645");
+//    props.put("ssl.endpoint.identification.algorithm", "");
 
     KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(props);
 //    consumer.subscribe(Arrays.asList("foo", "bar"));
     consumer.subscribe(Arrays.asList(TOPIC));
 
-    ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(3000));
+    ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(4000));
     consumer.seekToBeginning(consumer.assignment());
 //    if (records.isEmpty()) {
 //      consumer.seekToBeginning(consumer.assignment());
