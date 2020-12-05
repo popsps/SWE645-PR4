@@ -4,6 +4,7 @@
 
 > ## **A STAND ALONE APPLICATION WITH THE EXTRA CREDIT INTEGRATION IS PROVIDED**
 
+
 This project is a container orchestration of 3 services. A frontend web application implemented using `Angular` and `nginx`. A backend application implemented using `JAVA EE` and `Tomcat` to handle REST API requests. And finally a persistent `Kafka` messaging service that acts as a persistent database.
 
 ## BUILD
