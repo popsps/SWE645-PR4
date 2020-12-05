@@ -84,7 +84,6 @@ services:
   swe645-kafka-1:
     image: wurstmeister/kafka:latest
     container_name: swe645-kafka-1
-    hostname: 'kafka-1'
     networks:
       swenet:
         aliases:
@@ -93,7 +92,6 @@ services:
       - 9093:9093
     volumes:
       - kafka-data-1:/kafka/kafka-logs
-      - ./certs:/certs
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: swe645-zookeeper-1:2181, swe645-zookeeper-2:2182, swe645-zookeeper-3:2183
@@ -103,22 +101,12 @@ services:
       # KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: 'true'
       KAFKA_CONTROLLER_SHUTDOWN_ENABLE: "true"
       KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9093
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:SSL,OUTSIDE:SSL
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_LOG_RETENTION_BYTES: -1
       KAFKA_LOG_RETENTION_DAYS: -1
       KAFKA_LOG_DIRS: /kafka/kafka-logs
       KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://localhost:9093
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
-      # SSL SECURITY
-      KAFKA_SSL_KEYSTORE_LOCATION: '/certs/docker.kafka.server.keystore.jks'
-      KAFKA_SSL_KEYSTORE_PASSWORD: 'swe645'
-      KAFKA_SSL_KEY_PASSWORD: 'swe645'
-      KAFKA_SSL_TRUSTSTORE_LOCATION: '/certs/docker.kafka.server.truststore.jks'
-      KAFKA_SSL_TRUSTSTORE_PASSWORD: 'swe645'
-      KAFKA_SSL_CLIENT_AUTH: 'none'
-      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: ''
-     
 
   swe645-kafka-2:
     image: wurstmeister/kafka:latest
@@ -129,7 +117,6 @@ services:
           - kafka-2
     volumes:
       - kafka-data-2:/kafka/kafka-logs
-      - ./certs:/certs
     environment:
       KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: swe645-zookeeper-1:2181, swe645-zookeeper-2:2182, swe645-zookeeper-3:2183
@@ -139,19 +126,11 @@ services:
       # KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: 'true'
       KAFKA_CONTROLLER_SHUTDOWN_ENABLE: "true"
       KAFKA_LISTENERS: INSIDE://:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:SSL,OUTSIDE:SSL
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_LOG_RETENTION_BYTES: -1
       KAFKA_LOG_RETENTION_DAYS: -1
       KAFKA_LOG_DIRS: /kafka/kafka-logs
-      # SSL SECURITY
-      KAFKA_SSL_KEYSTORE_LOCATION: '/certs/docker.kafka.server.keystore.jks'
-      KAFKA_SSL_KEYSTORE_PASSWORD: 'swe645'
-      KAFKA_SSL_KEY_PASSWORD: 'swe645'
-      KAFKA_SSL_TRUSTSTORE_LOCATION: '/certs/docker.kafka.server.truststore.jks'
-      KAFKA_SSL_TRUSTSTORE_PASSWORD: 'swe645'
-      KAFKA_SSL_CLIENT_AUTH: 'none'
-      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: ''
 
   swe645-kafka-3:
     image: wurstmeister/kafka:latest
@@ -162,7 +141,6 @@ services:
           - kafka-3
     volumes:
       - kafka-data-3:/kafka/kafka-logs
-      - ./certs:/certs
     environment:
       KAFKA_BROKER_ID: 3
       KAFKA_ZOOKEEPER_CONNECT: swe645-zookeeper-1:2181, swe645-zookeeper-2:2182, swe645-zookeeper-3:2183
@@ -172,15 +150,7 @@ services:
       # KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: 'true'
       KAFKA_CONTROLLER_SHUTDOWN_ENABLE: "true"
       KAFKA_LISTENERS: INSIDE://:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:SSL,OUTSIDE:SSL
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_LOG_RETENTION_BYTES: -1
       KAFKA_LOG_RETENTION_DAYS: -1
-      # SSL SECURITY
-      KAFKA_SSL_KEYSTORE_LOCATION: '/certs/docker.kafka.server.keystore.jks'
-      KAFKA_SSL_KEYSTORE_PASSWORD: 'swe645'
-      KAFKA_SSL_KEY_PASSWORD: 'swe645'
-      KAFKA_SSL_TRUSTSTORE_LOCATION: '/certs/docker.kafka.server.truststore.jks'
-      KAFKA_SSL_TRUSTSTORE_PASSWORD: 'swe645'
-      KAFKA_SSL_CLIENT_AUTH: 'none'
-      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: ''
