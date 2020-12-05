@@ -26,9 +26,6 @@ public class SampleConsumer {
     props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
     props.put("auto.offset.reset", "earliest");
 
-    Path path = Paths.get("");
-    URL tc = this.getClass().getClassLoader().getResource("docker.kafka.client.truststore.jks");
-    System.out.println("tc: " + tc.getFile().substring(1));
     // ssl support
     props.put("security.protocol", "SSL");
     props.put("ssl.truststore.location", "C:\\Users\\MarsS\\Dropbox\\GMU\\fall 2020\\SWE645\\hw4\\SWE645-PR4\\kafka_test\\certs\\docker.kafka.client.truststore.jks");
@@ -42,6 +39,7 @@ public class SampleConsumer {
     consumer.subscribe(Arrays.asList(TOPIC));
 
     ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(3000));
+    consumer.seekToBeginning(consumer.assignment());
 //    if (records.isEmpty()) {
 //      consumer.seekToBeginning(consumer.assignment());
 //    }
@@ -50,7 +48,7 @@ public class SampleConsumer {
       for (ConsumerRecord<String, String> record : records) {
         System.out.printf("offset: %d, key: %s, value: %s\n", record.offset(), record.key(), record.value());
       }
-      records = consumer.poll(Duration.ofMillis(1000));
+      records = consumer.poll(Duration.ofMillis(100));
     }
 //    consumer.commitSync(); manually commit
   }

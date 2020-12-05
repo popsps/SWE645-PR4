@@ -1,6 +1,8 @@
-# SWE645-PROJECT4 TEST 00.9
+# SWE645-PROJECT4 
 
 ## [EC2 Link](http://ec2-3-235-245-12.compute-1.amazonaws.com/)
+
+## STAND ALONE APPLICATION TO SUPPORT THE EXTRA CREDIT
 
 This project is a container orchestration of 3 services. A frontend web application implemented using `Angular` and `nginx`. A backend application implemented using `JAVA EE` and `Tomcat` to handle REST API requests. And finally a persistent `Kafka` messaging service that acts as a persistent database.
 
@@ -18,10 +20,8 @@ To build and run this project we will be using `Jenkins` to automate the build. 
 
 ```sh
 docker service rm $(docker service ls -q) || true # remove all previous services
-docker service create --name registry --publish 5000:5000 registry:2 # service registry to make images available across nodes
-docker-compose up -d # make images
+docker-compose up -d --build # make images
 docker-compose down --volumes # remove container created by compose
-docker-compose push # make images availbe across nodes
 docker stack deploy -c ./docker-compose.yml swe645 # run the container ochestration stack
 ```
 
@@ -323,68 +323,59 @@ public class StudentConsumer {
 }
 ```
 
-## PROJECT TREE STRUCTURE
+## EXTRA CREDIT
 
-Here is the tree view of my application with some annotation if you want to quickly find out what files and components are important to look for.
+### BUILD CERTIFICATES
 
-```treeview
-swe645-hw3
-├── README.md # Readme about setup, build, and installation
-├── backend # backend service
-│   ├── Dockerfile
-│   ├── pom.xml # dependency and build
-│   └── src
-│       └── main
-│           ├── java
-│           │   └── com
-│           │       └── swe645
-│           │           ├── FormServlet.java  # api: submit form, get student by id
-│           │           ├── ListAllStudentsServlet.java # api: get all students
-│           │           ├── StudentBean.java # Student bean class
-│           │           └── StudentDAO.java # Database operations
-│           ├── resources
-│           │   └── META-INF
-│           │       └── persistence.xml # Database configuration
-│           └── webapp
-│               ├── 404.html # fallback on error page
-│               └── WEB-INF
-│                   └── web.xml
-├── docker-compose.yml # orchestration of services
-├── frontend
-│   ├── Dockerfile
-│   ├── default.conf
-│   ├── package.json
-│   ├── proxy.conf.json
-│   ├── src
-│   │   ├── Materia.css
-│   │   ├── app
-│   │   │   ├── app-routing.module.ts # all the routings are defined here
-│   │   │   ├── app.component.html # application layout
-│   │   │   ├── app.component.ts
-│   │   │   ├── app.module.ts
-│   │   │   └── component
-│   │   │       ├── acknowledgment # acknowledgment page after submission
-│   │   │       │   ├── acknowledgment.component.html
-│   │   │       │   └── acknowledgment.component.ts
-│   │   │       ├── home # home page
-│   │   │       │   ├── home.component.html
-│   │   │       │   ├── home.component.scss
-│   │   │       │   ├── home.component.spec.ts
-│   │   │       │   └── home.component.ts
-│   │   │       ├── list-surveys # list all students. api call to ListAllStudents
-│   │   │       │   ├── list-surveys.component.html
-│   │   │       │   └── list-surveys.component.ts
-│   │   │       ├── navigation # navbar
-│   │   │       │   ├── navigation.component.html
-│   │   │       │   └── navigation.component.ts
-│   │   │       ├── student # api call(get) to FormServlet to get a single student form in readonly
-│   │   │       │   ├── student.component.html
-│   │   │       │   └── student.component.ts
-│   │   │       └── survey # student survey page. api call(post) to FormServlet
-│   │   │           ├── survey.component.html
-│   │   │           └── survey.component.ts
-│   │   └── styles.scss
-└── mysql_init
-    ├── Dockerfile
-    └── table_init.sql
+- Run `./generate-docker-kafka-ssl-certs.sh` to generate all certificates in the a directory called `certs`.
+- Run `docker-compose -f docker-compose-single-node_ssl.yml up` to create 2 instances with `SSL` support.
+- Run `/backend/src/java/com/swe645/testKafkaProducer.java` to produce a record using `SSL` 
+- Run `/backend/src/java/com/swe645/testKafkaConsumer.java` to consume records using `SSL`
+
+### SSL SUPPORT CODE ADDITION 
+
+> To see complete code refer to each file
+
+### **`docker-compose-single-node_ssl.yml.java`**
+
+```yml
+version: "3"
+  swe645-kafka:
+    volumes:
+      - ./certs:/certs
+    environment:
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:SSL
+      # SSL SECURITY
+      KAFKA_SSL_KEYSTORE_LOCATION: '/certs/docker.kafka.server.keystore.jks'
+      KAFKA_SSL_KEYSTORE_PASSWORD: 'swe645'
+      KAFKA_SSL_KEY_PASSWORD: 'swe645'
+      KAFKA_SSL_TRUSTSTORE_LOCATION: '/certs/docker.kafka.server.truststore.jks'
+      KAFKA_SSL_TRUSTSTORE_PASSWORD: 'swe645'
+      KAFKA_SSL_CLIENT_AUTH: 'none'
+      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: ''
 ```
+### **`/backend/src/java/com/swe645/SampleProducer.java`**
+
+```java
+// SSL Support
+props.put("security.protocol", "SSL");
+props.put("ssl.truststore.location", "C:\\Users\\MarsS\\Dropbox\\GMU\\fall 2020\\SWE645\\hw4\\SWE645-PR4\\kafka_test\\certs\\docker.kafka.client.truststore.jks");
+props.put("ssl.truststore.password", "swe645");
+props.put("ssl.truststore.type", "JKS");
+props.put("ssl.key.password", "swe645");
+props.put("ssl.endpoint.identification.algorithm", "");
+```
+
+### **`/backend/src/java/com/swe645/SampleConsumer.java`**
+
+```java
+// ssl support
+props.put("security.protocol", "SSL");
+props.put("ssl.truststore.location", "C:\\Users\\MarsS\\Dropbox\\GMU\\fall 2020\\SWE645\\hw4\\SWE645-PR4\\kafka_test\\certs\\docker.kafka.client.truststore.jks");
+props.put("ssl.truststore.password", "swe645");
+props.put("ssl.truststore.type", "JKS");
+props.put("ssl.key.password", "swe645");
+props.put("ssl.endpoint.identification.algorithm", "");
+```
+
+

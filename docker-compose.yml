@@ -107,6 +107,7 @@ services:
       KAFKA_LOG_RETENTION_DAYS: -1
       KAFKA_LOG_DIRS: /kafka/kafka-logs
       KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://localhost:9093
+      DELETE_TOPIC_ENABLE: "true"
 
   swe645-kafka-2:
     image: wurstmeister/kafka:latest
@@ -131,6 +132,7 @@ services:
       KAFKA_LOG_RETENTION_BYTES: -1
       KAFKA_LOG_RETENTION_DAYS: -1
       KAFKA_LOG_DIRS: /kafka/kafka-logs
+      DELETE_TOPIC_ENABLE: "true"
 
   swe645-kafka-3:
     image: wurstmeister/kafka:latest
@@ -154,3 +156,4 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_LOG_RETENTION_BYTES: -1
       KAFKA_LOG_RETENTION_DAYS: -1
+      DELETE_TOPIC_ENABLE: "true"
