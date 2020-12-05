@@ -35,12 +35,12 @@ public class StudentConsumer {
       props.put("auto.offset.reset", "earliest");
 
       // SSL Support
-      // props.put("security.protocol", "SSL");
-      // props.put("ssl.truststore.location", "/var/certs/docker.kafka.client.truststore.jks");
-      // props.put("ssl.truststore.password", "swe645");
-      // props.put("ssl.truststore.type", "JKS");
-      // props.put("ssl.key.password", "swe645");
-      // props.put("ssl.endpoint.identification.algorithm", "");
+      props.put("security.protocol", "SSL");
+      props.put("ssl.truststore.location", "/var/certs/docker.kafka.client.truststore.jks");
+      props.put("ssl.truststore.password", "swe645");
+      props.put("ssl.truststore.type", "JKS");
+      props.put("ssl.key.password", "swe645");
+      props.put("ssl.endpoint.identification.algorithm", "");
 
       KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(props);
       consumer.subscribe(Arrays.asList(TOPIC));
