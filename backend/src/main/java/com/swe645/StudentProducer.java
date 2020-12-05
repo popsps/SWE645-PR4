@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 import java.util.Properties;
 
 public class StudentProducer {
-  // static final String TOPIC = "survey-data-topic";
-  static final String TOPIC = "survey";
+  static final String TOPIC = "survey-data-topic";
+  // static final String TOPIC = "survey";
   static final String HOST = "kafka-1:9092";
 
   public StudentProducer() {
@@ -22,12 +22,13 @@ public class StudentProducer {
     props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
     props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
     // SSL Support
-    props.put("security.protocol", "SSL");
-    props.put("ssl.truststore.location", "/var/certs/docker.kafka.client.truststore.jks");
-    props.put("ssl.truststore.password", "swe645");
-    props.put("ssl.truststore.type", "JKS");
-    props.put("ssl.key.password", "swe645");
-    props.put("ssl.endpoint.identification.algorithm", "");
+    // props.put("security.protocol", "SSL");
+    // props.put("ssl.truststore.location", "/var/certs/docker.kafka.client.truststore.jks");
+    // props.put("ssl.truststore.password", "swe645");
+    // props.put("ssl.truststore.type", "JKS");
+    // props.put("ssl.key.password", "swe645");
+    // props.put("ssl.endpoint.identification.algorithm", "");
+
     Gson gson = new Gson();
     String data = gson.toJson(student);
     ProducerRecord producerRecord = new ProducerRecord(TOPIC, "swe645", data);
