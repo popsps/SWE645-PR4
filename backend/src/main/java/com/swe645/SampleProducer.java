@@ -16,16 +16,24 @@ import java.util.Properties;
 public class SampleProducer {
   public SampleProducer() {
     Properties props = new Properties();
-    props.put("bootstrap.servers", "localhost:9092");
+    props.put("bootstrap.servers", "localhost:9093");
     props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
     props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+    //      SSL Support
+    props.put("security.protocol", "SSL");
+    props.put("ssl.truststore.location", "/var/certs/docker.kafka.client.truststore.jks");
+    props.put("ssl.truststore.password", "swe645");
+    props.put("ssl.truststore.type", "JKS");
+    props.put("ssl.key.password", "swe645");
+    props.put("ssl.endpoint.identification.algorithm", "");
+
     Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
     StudentBean student = new StudentBean(234324, "Ray", "Danovan", "Fairfax",
         22030, "fairfax", "VA", "202", "mike@gmail.com", timestamp);
     Gson gson = new Gson();
     String data = gson.toJson(student);
     System.out.println("data sent: " + data);
-    ProducerRecord producerRecord = new ProducerRecord("test1", "swe645", data);
+    ProducerRecord producerRecord = new ProducerRecord("survey-data-topic", "swe645", data);
 
     KafkaProducer kafkaProducer = new KafkaProducer(props);
     kafkaProducer.send(producerRecord);

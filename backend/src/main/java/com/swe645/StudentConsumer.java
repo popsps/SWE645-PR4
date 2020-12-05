@@ -17,6 +17,7 @@ public class StudentConsumer {
   public StudentConsumer() {
   }
 
+  // static final String TOPIC = "survey-data-topic";
   static final String TOPIC = "survey";
   static final String GROUP = "survey_group";
   static final String HOST = "kafka-1:9092";
@@ -31,6 +32,14 @@ public class StudentConsumer {
       props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
       props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
       props.put("auto.offset.reset", "earliest");
+
+      // SSL Support
+      props.put("security.protocol", "SSL");
+      props.put("ssl.truststore.location", "/var/certs/docker.kafka.client.truststore.jks");
+      props.put("ssl.truststore.password", "swe645");
+      props.put("ssl.truststore.type", "JKS");
+      props.put("ssl.key.password", "swe645");
+      props.put("ssl.endpoint.identification.algorithm", "");
       KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(props);
       consumer.subscribe(Arrays.asList(TOPIC));
 
@@ -94,7 +103,7 @@ public class StudentConsumer {
             e.printStackTrace();
           }
         }
-        if(!students.isEmpty()){
+        if (!students.isEmpty()) {
           consumer.close();
           return students;
         }
